@@ -81,13 +81,19 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "TradeSphere AI is the AI-native marketplace where you buy, sell, and trade premium assets with real-time valuation and trust scoring.",
       },
-      { property: "og:title", content: "TradeSphere AI" },
+      { property: "og:title", content: "TradeSphere AI — The intelligent marketplace for buying, selling & trading" },
       {
         property: "og:description",
         content: "Buy, sell, and trade premium assets with AI-powered valuation and trust scoring.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "TradeSphere AI — The intelligent marketplace for buying, selling & trading" },
+      { name: "description", content: "TradeSphere AI is an AI-powered marketplace for buying, selling, and trading products with intelligent valuation." },
+      { property: "og:description", content: "TradeSphere AI is an AI-powered marketplace for buying, selling, and trading products with intelligent valuation." },
+      { name: "twitter:description", content: "TradeSphere AI is an AI-powered marketplace for buying, selling, and trading products with intelligent valuation." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9c35c9f9-9881-495c-9faf-4a23207dd113/id-preview-c0da6a92--c4aec762-c24f-4320-8305-c230da6816c6.lovable.app-1780729758976.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9c35c9f9-9881-495c-9faf-4a23207dd113/id-preview-c0da6a92--c4aec762-c24f-4320-8305-c230da6816c6.lovable.app-1780729758976.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

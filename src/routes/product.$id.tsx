@@ -162,7 +162,7 @@ function ProductPage() {
                   Specifications
                 </h2>
                 <div className="bg-card ring-1 ring-black/5 rounded-2xl divide-y divide-black/5">
-                  {product.specs.map((s) => (
+                  {product.specs.map((s: { label: string; value: string }) => (
                     <div key={s.label} className="flex justify-between p-4 text-sm">
                       <span className="text-muted-foreground">{s.label}</span>
                       <span className="font-medium">{s.value}</span>
@@ -203,7 +203,7 @@ function ProductPage() {
             <div className="mt-24">
               <h2 className="text-2xl font-semibold tracking-tight mb-8">Similar assets</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {similar.map((p) => (
+                {similar.map((p: import("@/lib/products").Product) => (
                   <ProductCard key={p.id} product={p} />
                 ))}
               </div>

@@ -214,3 +214,45 @@ function ProductPage() {
     </div>
   );
 }
+
+function BuyButton({ price, title }: { price: number; title: string }) {
+  const navigate = useNavigate();
+  async function onClick() {
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) {
+      toast.info("Sign in to reserve this asset");
+      navigate({ to: "/auth" });
+      return;
+    }
+    toast.success(`Reserved "${title}" — check your account for the order.`);
+  }
+  return (
+    <button
+      onClick={onClick}
+      className="flex-1 bg-ink text-surface text-sm font-medium py-3.5 px-7 rounded-full hover:opacity-90 transition"
+    >
+      Buy now · {formatPrice(price)}
+    </button>
+  );
+}
+
+function TradeButton({ title }: { title: string }) {
+  const navigate = useNavigate();
+  async function onClick() {
+    const { data } = await supabase.auth.getUser();
+    if (!data.user) {
+      navigate({ to: "/auth" });
+      return;
+    }
+    toast.success(`Trade proposal started for "${title}". We'll notify the seller.`);
+  }
+  return (
+    <button
+      onClick={onClick}
+      className="flex-1 bg-brand/10 text-brand text-sm font-medium py-3.5 px-7 rounded-full ring-1 ring-brand/20 hover:bg-brand/15 transition"
+    >
+      Propose a trade
+    </button>
+  );
+}
+

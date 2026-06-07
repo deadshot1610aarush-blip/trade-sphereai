@@ -166,7 +166,7 @@ function Marketplace() {
                   maximumFractionDigits: 0,
                 }).format(maxPrice)}
               </p>
-            </div>
+          </section>
           </aside>
 
           {/* Grid wrapper with H2 */}

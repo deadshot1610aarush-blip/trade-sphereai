@@ -5,11 +5,34 @@ import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { categories, products } from "@/lib/products";
 
+const MP_TITLE = "Marketplace — TradeSphere AI";
+const MP_DESC = "Browse premium assets verified by AI valuation and trust scoring.";
+
 export const Route = createFileRoute("/marketplace")({
   head: () => ({
     meta: [
-      { title: "Marketplace — TradeSphere AI" },
-      { name: "description", content: "Browse premium assets verified by AI valuation and trust scoring." },
+      { title: MP_TITLE },
+      { name: "description", content: MP_DESC },
+      { property: "og:title", content: MP_TITLE },
+      { property: "og:description", content: MP_DESC },
+      { property: "og:url", content: "https://trade-sphereai.lovable.app/marketplace" },
+      { name: "twitter:title", content: MP_TITLE },
+      { name: "twitter:description", content: MP_DESC },
+    ],
+    links: [
+      { rel: "canonical", href: "https://trade-sphereai.lovable.app/marketplace" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: MP_TITLE,
+          description: MP_DESC,
+          url: "https://trade-sphereai.lovable.app/marketplace",
+        }),
+      },
     ],
   }),
   component: Marketplace,
@@ -76,12 +99,14 @@ function Marketplace() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search by brand or model..."
+                aria-label="Search assets by brand or model"
                 className="w-full bg-card ring-1 ring-black/5 focus:ring-ink/20 rounded-full py-3 pl-11 pr-4 text-sm outline-none transition"
               />
             </div>
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as typeof sort)}
+              aria-label="Sort assets"
               className="bg-card ring-1 ring-black/5 rounded-full py-3 px-5 text-sm outline-none focus:ring-ink/20"
             >
               <option value="trending">Sort: Trending</option>
@@ -96,7 +121,8 @@ function Marketplace() {
       <section className="px-6 py-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10">
           {/* Filters */}
-          <aside className="space-y-8">
+          <aside aria-labelledby="filters-heading" className="space-y-8">
+            <h2 id="filters-heading" className="sr-only">Filters</h2>
             <div>
               <h3 className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-4">
                 Category
@@ -129,6 +155,7 @@ function Marketplace() {
                 step={100}
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
+                aria-label="Maximum price filter"
                 className="w-full accent-[var(--brand)]"
               />
               <p className="text-sm font-medium mt-2">
@@ -143,12 +170,12 @@ function Marketplace() {
           </aside>
 
           {/* Grid */}
-          <div>
+          <section aria-labelledby="assets-heading">
             <div className="flex items-center justify-between mb-6">
-              <p className="text-sm text-muted-foreground">
-                <span className="text-ink font-semibold">{filtered.length}</span> result
+              <h2 id="assets-heading" className="text-sm text-muted-foreground">
+                <span className="text-ink font-semibold">{filtered.length}</span> asset
                 {filtered.length === 1 ? "" : "s"}
-              </p>
+              </h2>
             </div>
 
             {filtered.length === 0 ? (
@@ -162,7 +189,7 @@ function Marketplace() {
                 ))}
               </div>
             )}
-          </div>
+          </section>
         </div>
       </section>
 

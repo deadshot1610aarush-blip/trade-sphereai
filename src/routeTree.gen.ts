@@ -9,13 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
+import { Route as GuidesLuxuryWatchTradingRouteImport } from './routes/guides.luxury-watch-trading'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MarketplaceRoute = MarketplaceRouteImport.update({
   id: '/marketplace',
   path: '/marketplace',
@@ -40,6 +47,12 @@ const ProductIdRoute = ProductIdRouteImport.update({
   path: '/product/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuidesLuxuryWatchTradingRoute =
+  GuidesLuxuryWatchTradingRouteImport.update({
+    id: '/guides/luxury-watch-trading',
+    path: '/guides/luxury-watch-trading',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   id: '/account',
   path: '/account',
@@ -50,14 +63,18 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/marketplace': typeof MarketplaceRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/guides/luxury-watch-trading': typeof GuidesLuxuryWatchTradingRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/marketplace': typeof MarketplaceRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/guides/luxury-watch-trading': typeof GuidesLuxuryWatchTradingRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRoutesById {
@@ -66,21 +83,39 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/marketplace': typeof MarketplaceRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
+  '/guides/luxury-watch-trading': typeof GuidesLuxuryWatchTradingRoute
   '/product/$id': typeof ProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/marketplace' | '/account' | '/product/$id'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/marketplace'
+    | '/sitemap.xml'
+    | '/account'
+    | '/guides/luxury-watch-trading'
+    | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/marketplace' | '/account' | '/product/$id'
+  to:
+    | '/'
+    | '/auth'
+    | '/marketplace'
+    | '/sitemap.xml'
+    | '/account'
+    | '/guides/luxury-watch-trading'
+    | '/product/$id'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/marketplace'
+    | '/sitemap.xml'
     | '/_authenticated/account'
+    | '/guides/luxury-watch-trading'
     | '/product/$id'
   fileRoutesById: FileRoutesById
 }
@@ -89,11 +124,20 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   MarketplaceRoute: typeof MarketplaceRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  GuidesLuxuryWatchTradingRoute: typeof GuidesLuxuryWatchTradingRoute
   ProductIdRoute: typeof ProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/marketplace': {
       id: '/marketplace'
       path: '/marketplace'
@@ -129,6 +173,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guides/luxury-watch-trading': {
+      id: '/guides/luxury-watch-trading'
+      path: '/guides/luxury-watch-trading'
+      fullPath: '/guides/luxury-watch-trading'
+      preLoaderRoute: typeof GuidesLuxuryWatchTradingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/account': {
       id: '/_authenticated/account'
       path: '/account'
@@ -155,6 +206,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   MarketplaceRoute: MarketplaceRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  GuidesLuxuryWatchTradingRoute: GuidesLuxuryWatchTradingRoute,
   ProductIdRoute: ProductIdRoute,
 }
 export const routeTree = rootRouteImport

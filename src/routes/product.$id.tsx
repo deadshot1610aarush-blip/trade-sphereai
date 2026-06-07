@@ -12,17 +12,51 @@ export const Route = createFileRoute("/product/$id")({
     if (!product) throw notFound();
     return { product, similar: getSimilar(params.id) };
   },
-  head: ({ loaderData }) => ({
-    meta: loaderData
-      ? [
-          { title: `${loaderData.product.title} — TradeSphere AI` },
-          { name: "description", content: loaderData.product.description.slice(0, 155) },
-          { property: "og:title", content: loaderData.product.title },
-          { property: "og:description", content: loaderData.product.description.slice(0, 155) },
-          { property: "og:image", content: loaderData.product.image },
-        ]
-      : [{ title: "Product — TradeSphere AI" }],
-  }),
+  head: ({ params, loaderData }) => {
+    if (!loaderData) {
+      return { meta: [{ title: "Product — TradeSphere AI" }] };
+    }
+    const { product } = loaderData;
+    const desc = product.description.slice(0, 155);
+    const url = `https://trade-sphereai.lovable.app/product/${params.id}`;
+    const title = `${product.title} — TradeSphere AI`;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: desc },
+        { property: "og:title", content: product.title },
+        { property: "og:description", content: desc },
+        { property: "og:image", content: product.image },
+        { property: "og:url", content: url },
+        { property: "og:type", content: "product" },
+        { name: "twitter:title", content: product.title },
+        { name: "twitter:description", content: desc },
+        { name: "twitter:image", content: product.image },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.title,
+            image: product.image,
+            description: product.description,
+            brand: { "@type": "Brand", name: product.brand },
+            category: product.category,
+            offers: {
+              "@type": "Offer",
+              price: product.price,
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
+              url,
+            },
+          }),
+        },
+      ],
+    };
+  },
   component: ProductPage,
   notFoundComponent: () => (
     <div className="min-h-screen grid place-items-center bg-surface">
@@ -77,6 +111,7 @@ function ProductPage() {
                 {[product.image, product.image, product.image, product.image].map((src, i) => (
                   <button
                     key={i}
+                    aria-label={`View product image ${i + 1}`}
                     className="aspect-square bg-muted rounded-xl overflow-hidden ring-1 ring-black/5 hover:ring-black/15 transition"
                   >
                     <img src={src} alt="" width={200} height={200} className="size-full object-cover opacity-80" />

@@ -4,15 +4,23 @@ import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { products, formatPrice } from "@/lib/products";
 
+const HOME_TITLE = "TradeSphere AI — Intelligent Trade Marketplace";
+const HOME_DESC =
+  "Buy, sell, and trade premium assets with AI-powered valuation, trust scoring, and a fair-trade engine.";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TradeSphere AI — The intelligent marketplace" },
-      {
-        name: "description",
-        content:
-          "Buy, sell, and trade premium assets with AI-powered valuation, trust scoring, and a fair-trade engine.",
-      },
+      { title: HOME_TITLE },
+      { name: "description", content: HOME_DESC },
+      { property: "og:title", content: HOME_TITLE },
+      { property: "og:description", content: HOME_DESC },
+      { property: "og:url", content: "https://trade-sphereai.lovable.app/" },
+      { name: "twitter:title", content: HOME_TITLE },
+      { name: "twitter:description", content: HOME_DESC },
+    ],
+    links: [
+      { rel: "canonical", href: "https://trade-sphereai.lovable.app/" },
     ],
   }),
   component: Landing,

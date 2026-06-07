@@ -76,25 +76,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TradeSphere AI — The intelligent marketplace for buying, selling & trading" },
-      {
-        name: "description",
-        content:
-          "TradeSphere AI is the AI-native marketplace where you buy, sell, and trade premium assets with real-time valuation and trust scoring.",
-      },
-      { property: "og:title", content: "TradeSphere AI — The intelligent marketplace for buying, selling & trading" },
-      {
-        property: "og:description",
-        content: "Buy, sell, and trade premium assets with AI-powered valuation and trust scoring.",
-      },
-      { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "TradeSphere AI — The intelligent marketplace for buying, selling & trading" },
-      { name: "description", content: "TradeSphere AI is an AI-powered marketplace for buying, selling, and trading products with intelligent valuation." },
-      { property: "og:description", content: "TradeSphere AI is an AI-powered marketplace for buying, selling, and trading products with intelligent valuation." },
-      { name: "twitter:description", content: "TradeSphere AI is an AI-powered marketplace for buying, selling, and trading products with intelligent valuation." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9c35c9f9-9881-495c-9faf-4a23207dd113/id-preview-c0da6a92--c4aec762-c24f-4320-8305-c230da6816c6.lovable.app-1780729758976.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9c35c9f9-9881-495c-9faf-4a23207dd113/id-preview-c0da6a92--c4aec762-c24f-4320-8305-c230da6816c6.lovable.app-1780729758976.png" },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "TradeSphere AI" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -103,6 +87,34 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              name: "TradeSphere AI",
+              url: "https://trade-sphereai.lovable.app",
+              description:
+                "AI-native marketplace for buying, selling, and trading premium assets.",
+            },
+            {
+              "@type": "WebSite",
+              name: "TradeSphere AI",
+              url: "https://trade-sphereai.lovable.app",
+              potentialAction: {
+                "@type": "SearchAction",
+                target:
+                  "https://trade-sphereai.lovable.app/marketplace?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            },
+          ],
+        }),
       },
     ],
   }),
@@ -131,7 +143,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );

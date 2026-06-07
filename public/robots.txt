@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://trade-sphereai.lovable.app/sitemap.xml

@@ -1,0 +1,15 @@
+# TradeSphere AI
+
+> AI-native marketplace where collectors buy, sell, and trade premium assets with real-time valuation and trust scoring.
+
+TradeSphere AI uses a neural valuation engine and a cryptographic trust index to facilitate direct peer-to-peer trades of high-end physical goods — watches, cameras, audio, fashion, and tech.
+
+## Pages
+
+- [Home](/): Product overview, hero, featured assets, and how the trade engine works.
+- [Marketplace](/marketplace): Browse all verified listings with AI valuation, trust scores, and filters.
+- [Luxury Watch Trading Guide](/guides/luxury-watch-trading): How to trade and value Rolex, Audemars Piguet, and other luxury watches on TradeSphere.
+
+## Optional
+
+- [Sign in](/auth): Account access for buying, selling, and trading.

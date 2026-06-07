@@ -1,4 +1,6 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
@@ -138,13 +140,9 @@ function ProductPage() {
 
               {/* Actions */}
               <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <button className="flex-1 bg-ink text-surface text-sm font-medium py-3.5 px-7 rounded-full hover:opacity-90 transition">
-                  Buy now · {formatPrice(product.price)}
-                </button>
+                <BuyButton price={product.price} title={product.title} />
                 {product.acceptsTrade && (
-                  <button className="flex-1 bg-brand/10 text-brand text-sm font-medium py-3.5 px-7 rounded-full ring-1 ring-brand/20 hover:bg-brand/15 transition">
-                    Propose a trade
-                  </button>
+                  <TradeButton title={product.title} />
                 )}
               </div>
 

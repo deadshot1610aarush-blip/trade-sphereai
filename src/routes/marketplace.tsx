@@ -166,10 +166,8 @@ function Marketplace() {
                   maximumFractionDigits: 0,
                 }).format(maxPrice)}
               </p>
-          </section>
+            </div>
           </aside>
-
-          {/* Grid wrapper with H2 */}
 
           {/* Grid */}
           <section aria-labelledby="assets-heading">
@@ -191,7 +189,7 @@ function Marketplace() {
                 ))}
               </div>
             )}
-          </div>
+          </section>
         </div>
       </section>
 

@@ -14,7 +14,211 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      favorites: {
+        Row: {
+          created_at: string
+          product_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          product_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          product_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          amount: number
+          buyer_id: string
+          created_at: string
+          id: string
+          product_id: string
+          status: string
+        }
+        Insert: {
+          amount: number
+          buyer_id: string
+          created_at?: string
+          id?: string
+          product_id: string
+          status?: string
+        }
+        Update: {
+          amount?: number
+          buyer_id?: string
+          created_at?: string
+          id?: string
+          product_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          accepts_trade: boolean
+          ai_valuation: number | null
+          brand: string | null
+          category: string
+          condition: string
+          created_at: string
+          description: string
+          id: string
+          image_url: string | null
+          price: number
+          seller_id: string
+          specs: Json
+          status: string
+          title: string
+          trust_score: number
+          updated_at: string
+        }
+        Insert: {
+          accepts_trade?: boolean
+          ai_valuation?: number | null
+          brand?: string | null
+          category: string
+          condition?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          price: number
+          seller_id: string
+          specs?: Json
+          status?: string
+          title: string
+          trust_score?: number
+          updated_at?: string
+        }
+        Update: {
+          accepts_trade?: boolean
+          ai_valuation?: number | null
+          brand?: string | null
+          category?: string
+          condition?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          price?: number
+          seller_id?: string
+          specs?: Json
+          status?: string
+          title?: string
+          trust_score?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          display_name: string | null
+          handle: string | null
+          id: string
+          location: string | null
+          trust_score: number
+          updated_at: string
+          verified: boolean
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string | null
+          handle?: string | null
+          id: string
+          location?: string | null
+          trust_score?: number
+          updated_at?: string
+          verified?: boolean
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string | null
+          handle?: string | null
+          id?: string
+          location?: string | null
+          trust_score?: number
+          updated_at?: string
+          verified?: boolean
+        }
+        Relationships: []
+      }
+      trade_offers: {
+        Row: {
+          cash_topup: number | null
+          created_at: string
+          id: string
+          message: string | null
+          offered_product_id: string | null
+          offerer_id: string
+          product_id: string
+          status: string
+        }
+        Insert: {
+          cash_topup?: number | null
+          created_at?: string
+          id?: string
+          message?: string | null
+          offered_product_id?: string | null
+          offerer_id: string
+          product_id: string
+          status?: string
+        }
+        Update: {
+          cash_topup?: number | null
+          created_at?: string
+          id?: string
+          message?: string | null
+          offered_product_id?: string | null
+          offerer_id?: string
+          product_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trade_offers_offered_product_id_fkey"
+            columns: ["offered_product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trade_offers_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

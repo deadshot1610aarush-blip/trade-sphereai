@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { categories, products } from "@/lib/products";
+import { useListings } from "@/hooks/use-listings";
 
 const MP_TITLE = "Marketplace — TradeSphere AI";
 const MP_DESC = "Browse premium assets verified by AI valuation and trust scoring.";
@@ -70,7 +71,7 @@ function Marketplace() {
         list = [...list].sort((a, b) => (b.trending ? 1 : 0) - (a.trending ? 1 : 0));
     }
     return list;
-  }, [query, category, maxPrice, sort]);
+  }, [listings, query, category, maxPrice, sort]);
 
   return (
     <div className="min-h-screen bg-surface text-ink">

@@ -15,6 +15,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as MarketplaceRouteImport } from './routes/marketplace'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedSellRouteImport } from './routes/_authenticated/sell'
 import { Route as GuidesLuxuryWatchTradingRouteImport } from './routes/guides.luxury-watch-trading'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
 
@@ -47,6 +48,11 @@ const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   path: '/account',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSellRoute = AuthenticatedSellRouteImport.update({
+  id: '/sell',
+  path: '/sell',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const GuidesLuxuryWatchTradingRoute =
   GuidesLuxuryWatchTradingRouteImport.update({
     id: '/guides/luxury-watch-trading',
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/marketplace': typeof MarketplaceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/sell': typeof AuthenticatedSellRoute
   '/guides/luxury-watch-trading': typeof GuidesLuxuryWatchTradingRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/marketplace': typeof MarketplaceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/sell': typeof AuthenticatedSellRoute
   '/guides/luxury-watch-trading': typeof GuidesLuxuryWatchTradingRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/marketplace': typeof MarketplaceRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
+  '/_authenticated/sell': typeof AuthenticatedSellRoute
   '/guides/luxury-watch-trading': typeof GuidesLuxuryWatchTradingRoute
   '/product/$id': typeof ProductIdRoute
 }
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/marketplace'
     | '/sitemap.xml'
     | '/account'
+    | '/sell'
     | '/guides/luxury-watch-trading'
     | '/product/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
     | '/marketplace'
     | '/sitemap.xml'
     | '/account'
+    | '/sell'
     | '/guides/luxury-watch-trading'
     | '/product/$id'
   id:
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '/marketplace'
     | '/sitemap.xml'
     | '/_authenticated/account'
+    | '/_authenticated/sell'
     | '/guides/luxury-watch-trading'
     | '/product/$id'
   fileRoutesById: FileRoutesById
@@ -173,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/sell': {
+      id: '/_authenticated/sell'
+      path: '/sell'
+      fullPath: '/sell'
+      preLoaderRoute: typeof AuthenticatedSellRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/guides/luxury-watch-trading': {
       id: '/guides/luxury-watch-trading'
       path: '/guides/luxury-watch-trading'
@@ -192,10 +211,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+  AuthenticatedSellRoute: typeof AuthenticatedSellRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+  AuthenticatedSellRoute: AuthenticatedSellRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

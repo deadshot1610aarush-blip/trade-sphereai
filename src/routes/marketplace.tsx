@@ -44,8 +44,9 @@ function Marketplace() {
   const [maxPrice, setMaxPrice] = useState(50000);
   const [sort, setSort] = useState<"trending" | "price-asc" | "price-desc" | "ai-value">("trending");
 
+  const { listings } = useListings();
   const filtered = useMemo(() => {
-    let list = products.filter((p) => {
+    let list = [...listings, ...products].filter((p) => {
       const matchesCategory = category === "All" || p.category === category;
       const matchesQuery =
         !query ||

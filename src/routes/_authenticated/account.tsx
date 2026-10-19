@@ -1,10 +1,48 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/products";
 import { toast } from "sonner";
+import { useListings } from "@/hooks/use-listings";
+
+function MyListings({ sellerId }: { sellerId: string }) {
+  const { listings, loading, refresh } = useListings(sellerId);
+  async function remove(id: string) {
+    if (!confirm("Delete this listing?")) return;
+    const { error } = await supabase.from("products").delete().eq("id", id);
+    if (error) toast.error(error.message);
+    else {
+      toast.success("Listing deleted");
+      refresh();
+    }
+  }
+  return (
+    <div className="bg-card ring-1 ring-black/5 rounded-2xl p-6 mt-8">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-sm font-semibold">Your listings</h2>
+        <Link to="/sell" className="text-xs font-medium text-brand hover:underline">+ List an item</Link>
+      </div>
+      {loading ? (
+        <p className="text-sm text-muted-foreground">Loading…</p>
+      ) : listings.length === 0 ? (
+        <p className="text-sm text-muted-foreground">You haven't listed anything yet.</p>
+      ) : (
+        <div className="divide-y divide-black/5">
+          {listings.map((p) => (
+            <div key={p.id} className="py-3 flex items-center gap-3 text-sm">
+              <img src={p.image} alt="" className="size-12 rounded-lg object-cover" />
+              <Link to="/product/$id" params={{ id: p.id }} className="flex-1 font-medium hover:underline truncate">{p.title}</Link>
+              <span className="font-semibold">{formatPrice(p.price)}</span>
+              <button onClick={() => remove(p.id)} className="text-xs text-destructive hover:underline">Delete</button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 type Profile = {
   display_name: string | null;
@@ -28,12 +66,14 @@ function AccountPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [email, setEmail] = useState("");
   const [saving, setSaving] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
       const { data: u } = await supabase.auth.getUser();
       if (!u.user) return;
       setEmail(u.user.email ?? "");
+      setUserId(u.user.id);
       const { data: p } = await supabase
         .from("profiles")
         .select("display_name, handle, bio, location, avatar_url, trust_score")
@@ -138,6 +178,8 @@ function AccountPage() {
               </div>
             )}
           </div>
+
+          {userId && <MyListings sellerId={userId} />}
         </div>
       </section>
       <Footer />

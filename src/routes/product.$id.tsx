@@ -5,12 +5,17 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { formatPrice, getProduct, getSimilar } from "@/lib/products";
+import { isListingId } from "@/lib/listings";
+import { getListing } from "@/lib/listings.functions";
 
 export const Route = createFileRoute("/product/$id")({
-  loader: ({ params }) => {
-    const product = getProduct(params.id);
-    if (!product) throw notFound();
-    return { product, similar: getSimilar(params.id) };
+  loader: async ({ params }) => {
+    const sample = getProduct(params.id);
+    if (sample) return { product: sample, similar: getSimilar(params.id) };
+    if (!isListingId(params.id)) throw notFound();
+    const listing = await getListing({ data: params.id });
+    if (!listing) throw notFound();
+    return { product: listing, similar: getSimilar(params.id).slice(0, 4) };
   },
   head: ({ params, loaderData }) => {
     if (!loaderData) {

@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { categories, products } from "@/lib/products";
+import { useListings } from "@/hooks/use-listings";
 
 const MP_TITLE = "Marketplace — TradeSphere AI";
 const MP_DESC = "Browse premium assets verified by AI valuation and trust scoring.";
@@ -44,8 +45,9 @@ function Marketplace() {
   const [maxPrice, setMaxPrice] = useState(50000);
   const [sort, setSort] = useState<"trending" | "price-asc" | "price-desc" | "ai-value">("trending");
 
+  const { listings } = useListings();
   const filtered = useMemo(() => {
-    let list = products.filter((p) => {
+    let list = [...listings, ...products].filter((p) => {
       const matchesCategory = category === "All" || p.category === category;
       const matchesQuery =
         !query ||
@@ -69,7 +71,7 @@ function Marketplace() {
         list = [...list].sort((a, b) => (b.trending ? 1 : 0) - (a.trending ? 1 : 0));
     }
     return list;
-  }, [query, category, maxPrice, sort]);
+  }, [listings, query, category, maxPrice, sort]);
 
   return (
     <div className="min-h-screen bg-surface text-ink">

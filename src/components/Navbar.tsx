@@ -29,7 +29,7 @@ export function Navbar() {
             >
               Browse
             </Link>
-            <a href="/#sell" className="text-sm font-medium text-muted-foreground hover:text-ink transition-colors">Sell</a>
+            <Link to="/sell" className="text-sm font-medium text-muted-foreground hover:text-ink transition-colors" activeProps={{ className: "text-ink" }}>Sell</Link>
             <a href="/#trade" className="text-sm font-medium text-muted-foreground hover:text-ink transition-colors">Trade</a>
             <a href="/#how" className="text-sm font-medium text-muted-foreground hover:text-ink transition-colors">How it works</a>
           </div>

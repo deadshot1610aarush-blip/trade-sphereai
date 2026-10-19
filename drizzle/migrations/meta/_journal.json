@@ -8,6 +8,13 @@
       "when": 1792406138767,
       "tag": "0000_product_images_policies",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792406162073,
+      "tag": "0001_product_images_read_own",
+      "breakpoints": true
     }
   ]
 }

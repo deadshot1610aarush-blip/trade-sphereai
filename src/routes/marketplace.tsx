@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
-import { categories, products } from "@/lib/products";
+import { categories } from "@/lib/products";
 import { useListings } from "@/hooks/use-listings";
 
 const MP_TITLE = "Marketplace — TradeSphere AI";

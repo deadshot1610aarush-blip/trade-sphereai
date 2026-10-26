@@ -1,5 +1,4 @@
 import type { Product } from "@/lib/products";
-import { products as sampleProducts } from "@/lib/products";
 
 export type ListingRow = {
   id: string;
@@ -25,7 +24,20 @@ export const LISTING_COLUMNS =
 export const LISTING_CATEGORIES = ["Watches", "Cameras", "Audio", "Fashion", "Tech", "Lifestyle"] as const;
 export const LISTING_CONDITIONS = ["Mint", "Excellent", "Very Good", "Good"] as const;
 
-const FALLBACK_IMAGE = sampleProducts[0].image;
+// Neutral placeholder for listings without a photo.
+const PLACEHOLDER_SVG = [
+  "<svg xmlns='http://www.w3.org/2000/svg' width='800' height='800'>",
+  "<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>",
+  "<stop offset='0' stop-color='#eef1ee'/><stop offset='1' stop-color='#d9ded9'/>",
+  "</linearGradient></defs>",
+  "<rect width='800' height='800' fill='url(#g)'/>",
+  "<g fill='none' stroke='#8b948b' stroke-width='14' stroke-linecap='round' stroke-linejoin='round'>",
+  "<rect x='300' y='330' width='200' height='160' rx='24'/>",
+  "<path d='M340 330l24-40h72l24 40'/>",
+  "<circle cx='400' cy='410' r='44'/>",
+  "</g></svg>",
+].join("");
+export const FALLBACK_IMAGE = `data:image/svg+xml,${encodeURIComponent(PLACEHOLDER_SVG)}`;
 
 export function rowToProduct(row: ListingRow, sellerName?: string | null): Product {
   const price = Number(row.price);

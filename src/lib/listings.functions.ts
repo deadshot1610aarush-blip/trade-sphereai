@@ -57,18 +57,16 @@ export const getSimilarListings = createServerFn({ method: "GET" })
       .from("products")
       .select(LISTING_COLUMNS)
       .eq("status", "active")
-      .neq("id", id)
       .order("created_at", { ascending: false })
-      .limit(12);
+      .limit(13);
     if (error) {
       console.error(error);
       return [];
     }
     if (!rows) return [];
-    const target = rows.find((r) => r.id === id);
-    const category = target?.category;
-    const sorted = [...rows].sort((a, b) =>
-      (b.category === category ? 1 : 0) - (a.category === category ? 1 : 0),
-    );
-    return sorted.slice(0, 4).map((r) => rowToProduct(r as ListingRow));
+    const target = (rows as ListingRow[]).find((r) => r.id === id);
+    const sorted = (rows as ListingRow[])
+      .filter((r) => r.id !== id)
+      .sort((a, b) => (b.category === target?.category ? 1 : 0) - (a.category === target?.category ? 1 : 0));
+    return sorted.slice(0, 4).map((r) => rowToProduct(r));
   });

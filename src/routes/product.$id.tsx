@@ -4,9 +4,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
-import { formatPrice, getProduct, getSimilar } from "@/lib/products";
+import { formatPrice } from "@/lib/products";
 import { isListingId } from "@/lib/listings";
-import { getListing } from "@/lib/listings.functions";
+import { getListing, getSimilarListings } from "@/lib/listings.functions";
 
 export const Route = createFileRoute("/product/$id")({
   loader: async ({ params }) => {

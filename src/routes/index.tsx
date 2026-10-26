@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
-import { products, formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/products";
+import { useListings } from "@/hooks/use-listings";
 
 const HOME_TITLE = "TradeSphere AI — Intelligent Trade Marketplace";
 const HOME_DESC =
@@ -27,8 +28,9 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
-  const showcase = products.slice(0, 2);
-  const featured = products.slice(0, 4);
+  const { listings, loading } = useListings();
+  const showcase = listings.slice(0, 2);
+  const featured = listings.slice(0, 4);
 
   return (
     <div className="min-h-screen bg-surface text-ink">

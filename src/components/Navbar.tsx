@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/use-auth";
+import { useIsAdmin } from "@/hooks/use-is-admin";
 import { supabase } from "@/integrations/supabase/client";
 
 export function Navbar() {
   const { user, loading } = useAuth();
+  const isAdmin = useIsAdmin();
   const navigate = useNavigate();
 
   async function signOut() {

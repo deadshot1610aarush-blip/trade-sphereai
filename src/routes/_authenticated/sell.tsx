@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Navbar } from "@/components/Navbar";
@@ -14,6 +14,18 @@ export const Route = createFileRoute("/_authenticated/sell")({
       { name: "robots", content: "noindex" },
     ],
   }),
+  // Listing is owner-only: the backend rejects non-admin inserts, and
+  // non-admins are bounced to their account page here.
+  beforeLoad: async () => {
+    const { data: u } = await supabase.auth.getUser();
+    if (!u.user) throw redirect({ to: "/auth" });
+    const { data } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", u.user.id)
+      .eq("role", "admin");
+    if (!data || data.length === 0) throw redirect({ to: "/account" });
+  },
   component: SellPage,
 });
 

@@ -6,9 +6,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/products";
 import { toast } from "sonner";
 import { useListings } from "@/hooks/use-listings";
+import { useIsAdmin } from "@/hooks/use-is-admin";
 
 function MyListings({ sellerId }: { sellerId: string }) {
   const { listings, loading, refresh } = useListings(sellerId);
+  const isAdmin = useIsAdmin();
   async function remove(id: string) {
     if (!confirm("Delete this listing?")) return;
     const { error } = await supabase.from("products").delete().eq("id", id);

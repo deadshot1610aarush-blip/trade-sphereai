@@ -24,7 +24,9 @@ function MyListings({ sellerId }: { sellerId: string }) {
     <div className="bg-card ring-1 ring-black/5 rounded-2xl p-6 mt-8">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-sm font-semibold">Your listings</h2>
-        <Link to="/sell" className="text-xs font-medium text-brand hover:underline">+ List an item</Link>
+        {isAdmin && (
+          <Link to="/sell" className="text-xs font-medium text-brand hover:underline">+ List an item</Link>
+        )}
       </div>
       {loading ? (
         <p className="text-sm text-muted-foreground">Loading…</p>

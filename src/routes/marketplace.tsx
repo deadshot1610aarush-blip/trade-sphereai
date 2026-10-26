@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
-import { categories, products } from "@/lib/products";
+import { categories } from "@/lib/products";
 import { useListings } from "@/hooks/use-listings";
 
 const MP_TITLE = "Marketplace — TradeSphere AI";
@@ -45,9 +45,9 @@ function Marketplace() {
   const [maxPrice, setMaxPrice] = useState(50000);
   const [sort, setSort] = useState<"trending" | "price-asc" | "price-desc" | "ai-value">("trending");
 
-  const { listings } = useListings();
+  const { listings, loading } = useListings();
   const filtered = useMemo(() => {
-    let list = [...listings, ...products].filter((p) => {
+    let list = [...listings].filter((p) => {
       const matchesCategory = category === "All" || p.category === category;
       const matchesQuery =
         !query ||
@@ -180,7 +180,16 @@ function Marketplace() {
               </h2>
             </div>
 
-            {filtered.length === 0 ? (
+            {loading ? (
+              <div className="py-24 text-center">
+                <p className="text-sm text-muted-foreground">Loading listings…</p>
+              </div>
+            ) : listings.length === 0 ? (
+              <div className="py-24 text-center">
+                <p className="text-sm font-medium mb-2">No listings yet.</p>
+                <p className="text-sm text-muted-foreground">Fresh assets land here soon — check back shortly.</p>
+              </div>
+            ) : filtered.length === 0 ? (
               <div className="py-24 text-center">
                 <p className="text-sm text-muted-foreground">No assets match those filters.</p>
               </div>

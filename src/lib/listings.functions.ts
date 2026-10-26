@@ -45,3 +45,28 @@ export const getListing = createServerFn({ method: "GET" })
       .maybeSingle();
     return rowToProduct(data as ListingRow, profile?.display_name);
   });
+
+export const getSimilarListings = createServerFn({ method: "GET" })
+  .inputValidator((id: string) => {
+    if (!isListingId(id)) throw new Error("Invalid id");
+    return id;
+  })
+  .handler(async ({ data: id }) => {
+    const sb = publicClient();
+    const { data: rows, error } = await sb
+      .from("products")
+      .select(LISTING_COLUMNS)
+      .eq("status", "active")
+      .order("created_at", { ascending: false })
+      .limit(13);
+    if (error) {
+      console.error(error);
+      return [];
+    }
+    if (!rows) return [];
+    const target = (rows as ListingRow[]).find((r) => r.id === id);
+    const sorted = (rows as ListingRow[])
+      .filter((r) => r.id !== id)
+      .sort((a, b) => (b.category === target?.category ? 1 : 0) - (a.category === target?.category ? 1 : 0));
+    return sorted.slice(0, 4).map((r) => rowToProduct(r));
+  });

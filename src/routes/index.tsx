@@ -72,48 +72,84 @@ function Landing() {
 
           <div className="w-full lg:w-[42%] relative animate-fade-up" style={{ animationDelay: "120ms" }}>
             <div className="relative z-10 space-y-4">
-              <div className="glass-card p-4 rounded-2xl ring-1 ring-black/5 shadow-xl translate-x-4 rotate-2">
-                <img
-                  src={showcase[0].image}
-                  alt={showcase[0].title}
-                  width={800}
-                  height={800}
-                  className="w-full aspect-[4/3] object-cover rounded-xl mb-4"
-                />
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-sm font-semibold">{showcase[0].title}</h3>
-                    <p className="text-[12px] text-muted-foreground">Verified {showcase[0].condition} Condition</p>
-                  </div>
-                  <div className="bg-brand/10 text-brand text-[10px] font-bold px-2 py-0.5 rounded">
-                    {showcase[0].trustScore} AI
-                  </div>
-                </div>
-              </div>
-
-              <div className="glass-card p-4 rounded-2xl ring-1 ring-black/5 shadow-lg -translate-x-8 -rotate-1">
-                <div className="flex items-center gap-4">
+              {showcase[0] ? (
+                <div className="glass-card p-4 rounded-2xl ring-1 ring-black/5 shadow-xl translate-x-4 rotate-2">
                   <img
-                    src={showcase[1].image}
-                    alt={showcase[1].title}
-                    width={64}
-                    height={64}
-                    className="size-16 object-cover rounded-xl"
+                    src={showcase[0].image}
+                    alt={showcase[0].title}
+                    width={800}
+                    height={800}
+                    className="w-full aspect-[4/3] object-cover rounded-xl mb-4"
                   />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between mb-1 gap-2">
-                      <span className="text-sm font-semibold truncate">{showcase[1].title}</span>
-                      <span className="text-xs font-medium text-brand shrink-0">
-                        +{formatPrice(showcase[1].aiValuation - showcase[1].price)}
-                      </span>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-sm font-semibold">{showcase[0].title}</h3>
+                      <p className="text-[12px] text-muted-foreground">Verified {showcase[0].condition} Condition</p>
                     </div>
-                    <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
-                      <div className="h-full bg-brand" style={{ width: "85%" }} />
+                    <div className="bg-brand/10 text-brand text-[10px] font-bold px-2 py-0.5 rounded">
+                      {showcase[0].trustScore} AI
                     </div>
-                    <p className="text-[10px] text-muted-foreground mt-1">Fair Trade Match · 85%</p>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="glass-card p-8 rounded-2xl ring-1 ring-black/5 shadow-xl translate-x-4 rotate-2 aspect-[4/3] grid place-items-center text-center">
+                  <div>
+                    <div className="size-11 rounded-full bg-brand/10 text-brand grid place-items-center mx-auto mb-4">
+                      <svg className="size-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.6" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                      </svg>
+                    </div>
+                    <p className="text-sm font-semibold mb-1">
+                      {loading ? "Scanning the marketplace…" : "First listing headlines here."}
+                    </p>
+                    <p className="text-xs text-muted-foreground max-w-[30ch] mx-auto">
+                      {loading
+                        ? "Pulling live assets from the market."
+                        : "The seller's newest finds appear the moment they go live."}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {showcase[1] ? (
+                <div className="glass-card p-4 rounded-2xl ring-1 ring-black/5 shadow-lg -translate-x-8 -rotate-1">
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={showcase[1].image}
+                      alt={showcase[1].title}
+                      width={64}
+                      height={64}
+                      className="size-16 object-cover rounded-xl"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-1 gap-2">
+                        <span className="text-sm font-semibold truncate">{showcase[1].title}</span>
+                        <span className="text-xs font-medium text-brand shrink-0">
+                          +{formatPrice(showcase[1].aiValuation - showcase[1].price)}
+                        </span>
+                      </div>
+                      <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-brand" style={{ width: "85%" }} />
+                      </div>
+                      <p className="text-[10px] text-muted-foreground mt-1">Fair Trade Match · 85%</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="glass-card p-4 rounded-2xl ring-1 ring-black/5 shadow-lg -translate-x-8 -rotate-1">
+                  <div className="flex items-center gap-4">
+                    <div className="size-16 rounded-xl bg-brand/10 text-brand grid place-items-center shrink-0">
+                      <svg className="size-5" fill="none" viewBox="0 0 24 24" strokeWidth="1.6" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold">Fair Trade Match</p>
+                      <p className="text-[10px] text-muted-foreground mt-1">Engine standing by · awaiting live assets</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="absolute -inset-12 bg-radial-brand blur-3xl -z-0 opacity-60" />
           </div>
@@ -149,11 +185,22 @@ function Landing() {
               View marketplace →
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {featured.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
+          {featured.length === 0 ? (
+            <div className="py-14 px-8 bg-card rounded-3xl ring-1 ring-black/5 text-center">
+              <p className="text-sm font-medium mb-2">
+                {loading ? "Curating live listings…" : "The engine is curating the first listings."}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {loading ? "" : "Fresh auction finds appear here the moment they're listed."}
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {featured.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

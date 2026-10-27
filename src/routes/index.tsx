@@ -185,11 +185,22 @@ function Landing() {
               View marketplace →
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {featured.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
+          {featured.length === 0 ? (
+            <div className="py-14 px-8 bg-card rounded-3xl ring-1 ring-black/5 text-center">
+              <p className="text-sm font-medium mb-2">
+                {loading ? "Curating live listings…" : "The engine is curating the first listings."}
+              </p>
+              <p className="text-sm text-muted-foreground">
+                {loading ? "" : "Fresh auction finds appear here the moment they're listed."}
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {featured.map((p) => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
-import { products } from "@/lib/products";
+import { publicClient } from "@/lib/listings.functions";
 
 const BASE_URL = "https://trade-sphereai.lovable.app";
 
@@ -19,12 +19,23 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/marketplace", changefreq: "daily", priority: "0.9" },
           { path: "/guides/luxury-watch-trading", changefreq: "monthly", priority: "0.7" },
           { path: "/auth", changefreq: "yearly", priority: "0.3" },
-          ...products.map<SitemapEntry>((p) => ({
-            path: `/product/${p.id}`,
-            changefreq: "weekly",
-            priority: "0.8",
-          })),
         ];
+
+        // Index live product listings when the database is reachable.
+        try {
+          const sb = publicClient();
+          const { data } = await sb
+            .from("products")
+            .select("id")
+            .eq("status", "active")
+            .order("created_at", { ascending: false })
+            .limit(500);
+          for (const row of data ?? []) {
+            entries.push({ path: `/product/${row.id}`, changefreq: "weekly", priority: "0.8" });
+          }
+        } catch (err) {
+          console.error("sitemap listing fetch failed", err);
+        }
 
         const urls = entries.map(
           (e) =>

@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 import { isListingId, LISTING_COLUMNS, rowToProduct, type ListingRow } from "@/lib/listings";
 
-function publicClient() {
+export function publicClient() {
   const key = process.env.SUPABASE_PUBLISHABLE_KEY!;
   return createClient<Database>(process.env.SUPABASE_URL!, key, {
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
